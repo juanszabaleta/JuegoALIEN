@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverUI;
     [SerializeField] int numEnemies;
     [SerializeField] int nivel;
+    public bool lento = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +34,29 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("game");
         Time.timeScale = 1;
+  
     }
     public void nivel2()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("game 2");
     }
     public void nivel3()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("game 3");
+    }
+    public void menu()
+    {
+        SceneManager.LoadScene("menu");
+    }
+    public void cambio1()
+    {
+        SceneManager.LoadScene("cambio1");
+    }
+    public void cambio2()
+    {
+        SceneManager.LoadScene("cambio2");
     }
 
 
@@ -61,24 +76,33 @@ public class GameManager : MonoBehaviour
         numEnemies = numEnemies - 1;
         if (numEnemies < 1 && nivel == 1)
         {
-            nivel2();
+         
+            level2();
         }
         else if (numEnemies < 1 && nivel == 2)
         {
-            nivel3();
+            level3();
         }
         else if(numEnemies < 1 && nivel == 3)
         {
             Ganar();
         }
     }
-
+    void level2()
+    {
+        Time.timeScale = 0;
+        SceneManager.LoadScene("cambio1");
+    }
+    void level3()
+    {
+        Time.timeScale = 0;
+      SceneManager.LoadScene("cambio2");
+    }
     void Ganar()
     {
         gameOver = true;
         Time.timeScale = 0;
         player.gamePaused = true;
-        gameOverUI.SetActive(true);
+        SceneManager.LoadScene("final");
     }
-
 }

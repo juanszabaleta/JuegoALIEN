@@ -7,6 +7,8 @@ public class Animal : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] bool movingRight;
     [SerializeField] GameManager gm;
+    [SerializeField] int vida;
+    public bool lento = false;
 
     float minX, maxX;
     int puntosDeVida = 5;
@@ -53,9 +55,31 @@ public class Animal : MonoBehaviour
         
         if(collision.gameObject.CompareTag("Disparo") )
         {
-            gm.ReducirNumEnemigos();
-            Destroy(this.gameObject);
+
+               Daño();
+                if (gm.lento == true)
+                {
+                    vida = 1;
+                    Destroy(this.gameObject);
+                    gm.ReducirNumEnemigos();
+                }
+                else
+                {
+                    if (vida < 1)
+                    {
+
+                        Destroy(this.gameObject);
+                        gm.ReducirNumEnemigos();
+                    }
+                }
+
+
         }
+    }
+    void Daño()
+    {
+
+        vida = vida - 1;
     }
 
 }
