@@ -8,16 +8,14 @@ public class Spaceship : MonoBehaviour
     [SerializeField] GameObject bala;
     [SerializeField] GameObject balaRafaga;
     [SerializeField] GameObject disparador;
-
     [SerializeField] float fireRate;
-    
-
     float minX, maxX, minY, maxY;
     float nextFire = 0;
     float nextRafaga = 0;
     bool cambiarBala = true;
 
     public bool gamePaused = false;
+    public bool lento = false;
 
 
     // Start is called before the first frame update
@@ -32,7 +30,7 @@ public class Spaceship : MonoBehaviour
         minX = puntoMinParaY.x + 0.7f;
         minY = puntoMinParaY.y;
 
-       
+
 
         // World space = el espacio de juego
         // screen space = la resolucion
@@ -42,7 +40,7 @@ public class Spaceship : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gamePaused)
+        if (!gamePaused)
         {
             MoverNave();
             if (cambiarBala)
@@ -54,23 +52,23 @@ public class Spaceship : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Z))
                 cambiarBala = cambiarBala ? false : true;
         }
-        
+
 
     }
 
     void DispararRafaga()
     {
-        if(Input.GetKey(KeyCode.Space) && Time.time >= nextRafaga)
+        if (Input.GetKey(KeyCode.Space) && Time.time >= nextRafaga)
         {
             Instantiate(balaRafaga, disparador.transform.position, transform.rotation);
-            nextRafaga = Time.time + (fireRate/3);
+            nextRafaga = Time.time + (fireRate / 3);
         }
-        
+
     }
 
     void Disparar()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && Time.time >= nextFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextFire)
         {
             Instantiate(bala, disparador.transform.position, transform.rotation);
             nextFire = Time.time + fireRate;
@@ -111,5 +109,5 @@ public class Spaceship : MonoBehaviour
             transform.position = new Vector2(transform.position.x, minY);
         }
     }
- 
+
 }

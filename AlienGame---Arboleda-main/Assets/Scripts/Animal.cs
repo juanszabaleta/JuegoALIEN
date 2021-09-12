@@ -11,7 +11,6 @@ public class Animal : MonoBehaviour
     public bool lento = false;
 
     float minX, maxX;
-    int puntosDeVida = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -63,22 +62,31 @@ public class Animal : MonoBehaviour
                     Destroy(this.gameObject);
                     gm.ReducirNumEnemigos();
                 }
-                else
-                {
-                    if (vida < 1)
+                else if (vida < 1)
                     {
-
-                        Destroy(this.gameObject);
-                        gm.ReducirNumEnemigos();
+                     Destroy(this.gameObject);
+                     gm.ReducirNumEnemigos();
                     }
-                }
-
-
+                
+        }
+        else if(collision.gameObject.CompareTag("DisparoRafaga"))
+        {
+            Daño();
+            if(gm.lento == true)
+            {
+                vida = 1;
+                Destroy(this.gameObject);
+                gm.ReducirNumEnemigos();
+            }
+            else if (vida < 1)
+            {
+                Destroy(this.gameObject);
+                gm.ReducirNumEnemigos();
+            }
         }
     }
     void Daño()
     {
-
         vida = vida - 1;
     }
 

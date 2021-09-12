@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] int numEnemies;
     [SerializeField] int nivel;
     public bool lento = false;
+    float intentos = 3;
+    float duraL = 3;
+    float despacio =0;
+
+
+
 
 
     // Start is called before the first frame update
@@ -22,21 +28,31 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(false);
 
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P) && gameOver == false)
+        {
             PauseGame();
+        }
 
-        
+        if (Input.GetKeyDown(KeyCode.M) && gameOver == false && intentos>0)
+        {   
+        Nmecanica();
+            despacio = Time.time + duraL;
+            intentos = intentos - 1;
+        }
+        if (gameOver == false && Time.time >=despacio)
+        {
+            Tnormal();
+        }
     }
 
+    // Update is called once per frame
     public void StartGame()
     {
         SceneManager.LoadScene("game");
         Time.timeScale = 1;
-  
+
     }
     public void nivel2()
     {
@@ -59,6 +75,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("cambio2");
     }
 
+    void Nmecanica()
+    {
+        lento = lento ? false : true;
+        player.lento = lento;
+        Time.timeScale = lento ? 0.8f : 1;
+    }
+
+    void Tnormal()
+    {
+        lento = false;
+        Time.timeScale = 1;
+    }
 
     void PauseGame()
     {
